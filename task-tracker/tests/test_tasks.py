@@ -79,3 +79,10 @@ def test_stats(client):
     assert s["total"] == 2 and s["completion_rate"] == 0.5
     assert s["by_status"] == {"todo": 1, "done": 1}
     assert s["top_tags"][0] == ["x", 2]
+
+
+def test_overdue_list_only_has_late_open_tasks(client):
+    client.post("/tasks", json={"title": "late", "due_date": "2000-01-01"})
+    client.post("/tasks", json={"title": "later", "due_date": "2999-01-01"})
+    titles = [t["title"] for t in client.get("/tasks/overdue/list").json()]
+    assert titles == ["late"]

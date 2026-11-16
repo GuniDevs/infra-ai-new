@@ -59,3 +59,9 @@ def delete_task(task_id: int, db: sqlite3.Connection = Depends(get_db)) -> Respo
     if not repo.delete(db, task_id):
         raise HTTPException(404, "task not found")
     return Response(status_code=204)
+
+
+@router.get("/overdue/list", response_model=list[Task])
+def overdue_tasks(db: sqlite3.Connection = Depends(get_db)) -> list[Task]:
+    """Tasks past their due date that are not done yet."""
+    return [t for t in repo.list_tasks(db, limit=200) if t.overdue]
