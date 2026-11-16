@@ -2,7 +2,7 @@ from fastapi import FastAPI
 
 from app.routers import stats, tasks
 
-app = FastAPI(title="Task Tracker", version="0.1.0")
+app = FastAPI(title="Task Tracker v2", version="0.1.0")
 app.include_router(tasks.router)
 app.include_router(stats.router)
 
