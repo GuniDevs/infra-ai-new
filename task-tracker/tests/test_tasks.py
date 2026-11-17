@@ -94,3 +94,10 @@ def test_reopen(client):
     r = client.post(f"/tasks/{t['id']}/reopen")
     assert r.status_code == 200 and r.json()["status"] == "todo"
     assert client.post("/tasks/999/reopen").status_code == 404
+
+
+def test_stats_counts_open_tasks(client):
+    make(client)
+    d = make(client)
+    client.post(f"/tasks/{d['id']}/complete")
+    assert client.get("/stats").json()["open"] == 1

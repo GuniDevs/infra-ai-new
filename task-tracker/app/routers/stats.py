@@ -16,6 +16,7 @@ def stats(db: sqlite3.Connection = Depends(get_db)) -> dict:
     done = sum(1 for t in tasks if t.status == "done")
     return {
         "total": total,
+        "open": total - done,
         "by_status": dict(Counter(t.status.value for t in tasks)),
         "by_priority": dict(Counter(t.priority.value for t in tasks)),
         "overdue": sum(1 for t in tasks if t.overdue),
