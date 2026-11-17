@@ -86,3 +86,11 @@ def test_overdue_list_only_has_late_open_tasks(client):
     client.post("/tasks", json={"title": "later", "due_date": "2999-01-01"})
     titles = [t["title"] for t in client.get("/tasks/overdue/list").json()]
     assert titles == ["late"]
+
+
+def test_reopen(client):
+    t = make(client)
+    client.post(f"/tasks/{t['id']}/complete")
+    r = client.post(f"/tasks/{t['id']}/reopen")
+    assert r.status_code == 200 and r.json()["status"] == "todo"
+    assert client.post("/tasks/999/reopen").status_code == 404

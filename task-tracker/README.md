@@ -10,6 +10,6 @@ python -m venv .venv
 
 Docs at http://localhost:8000/docs. Tests: `python -m pytest`.
 
-Endpoints: `POST/GET /tasks`, `GET/PATCH/DELETE /tasks/{id}`, `POST /tasks/{id}/complete`, `GET /stats`, `GET /healthz`.
+Endpoints: `POST/GET /tasks`, `GET/PATCH/DELETE /tasks/{id}`, `POST /tasks/{id}/complete`, `POST /tasks/{id}/reopen`, `GET /stats`, `GET /healthz`.
 List filters: `status`, `priority`, `tag`, `search`, `overdue`, `limit`, `offset`.
 "# infra-ai" 
