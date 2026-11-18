@@ -10,7 +10,7 @@ PRIORITY_ORDER = {"high": 0, "medium": 1, "low": 2}
 def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
-
+"""All SQL lives here."""
 def _row_to_task(row: sqlite3.Row) -> Task:
     due = date.fromisoformat(row["due_date"]) if row["due_date"] else None
     return Task(
