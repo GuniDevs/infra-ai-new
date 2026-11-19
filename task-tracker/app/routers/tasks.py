@@ -54,6 +54,15 @@ def complete_task(task_id: int, db: sqlite3.Connection = Depends(get_db)) -> Tas
     return task
 
 
+@router.post("/{task_id}/reopen", response_model=Task)
+def reopen_task(task_id: int, db: sqlite3.Connection = Depends(get_db)) -> Task:
+    """Put a finished task back to 'todo'."""
+    task = repo.update(db, task_id, TaskUpdate(status=Status.todo))
+    if task is None:
+        raise HTTPException(404, "task not found")
+    return task
+
+
 @router.delete("/{task_id}", status_code=204)
 def delete_task(task_id: int, db: sqlite3.Connection = Depends(get_db)) -> Response:
     if not repo.delete(db, task_id):
